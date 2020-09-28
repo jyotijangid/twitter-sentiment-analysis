@@ -1,5 +1,5 @@
 # twitter-sentiment-analysis
-The model takes a certain number of tweets (specified by user) and checks for the sentiment in those tweets. <br/>
+The model takes a certain number of tweets and a keyword both specified by user then checks for the sentiment in those tweets. <br/>
 
 Libraries used: TextBlob (for polarity of a tweet), tweepy (getting the tweets from twitter api), matplotlib (plotting the graph of positive,negative,neutrak tweets),<br/>
 re (regular expression)<br/>
