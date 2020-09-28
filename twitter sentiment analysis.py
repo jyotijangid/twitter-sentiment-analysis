@@ -36,11 +36,11 @@ class SentimentAnalysis:
         # creating some variables to store info
         polarity = 0
         positive = 0
-        wpositive = 0
-        spositive = 0
+        weak_positive = 0
+        strong_positive = 0
         negative = 0
-        wnegative = 0
-        snegative = 0
+        weak_negative = 0
+        strong_negative = 0
         neutral = 0
 
 
@@ -56,17 +56,17 @@ class SentimentAnalysis:
             if (analysis.sentiment.polarity == 0):  # adding reaction of how people are reacting to find average later
                 neutral += 1
             elif (analysis.sentiment.polarity > 0 and analysis.sentiment.polarity <= 0.3):
-                wpositive += 1
+                weak_positive += 1
             elif (analysis.sentiment.polarity > 0.3 and analysis.sentiment.polarity <= 0.6):
                 positive += 1
             elif (analysis.sentiment.polarity > 0.6 and analysis.sentiment.polarity <= 1):
-                spositive += 1
+                strong_positive += 1
             elif (analysis.sentiment.polarity > -0.3 and analysis.sentiment.polarity <= 0):
-                wnegative += 1
+                weak_negative += 1
             elif (analysis.sentiment.polarity > -0.6 and analysis.sentiment.polarity <= -0.3):
                 negative += 1
             elif (analysis.sentiment.polarity > -1 and analysis.sentiment.polarity <= -0.6):
-                snegative += 1
+                strong_negative += 1
 
 
         # Write to csv and close csv file
@@ -75,11 +75,11 @@ class SentimentAnalysis:
 
         # finding average of how people are reacting
         positive = self.percentage(positive, NoOfTerms)
-        wpositive = self.percentage(wpositive, NoOfTerms)
-        spositive = self.percentage(spositive, NoOfTerms)
+        wpositive = self.percentage(weak_positive, NoOfTerms)
+        spositive = self.percentage(strong_positive, NoOfTerms)
         negative = self.percentage(negative, NoOfTerms)
-        wnegative = self.percentage(wnegative, NoOfTerms)
-        snegative = self.percentage(snegative, NoOfTerms)
+        wnegative = self.percentage(weak_negative, NoOfTerms)
+        snegative = self.percentage(strong_negative, NoOfTerms)
         neutral = self.percentage(neutral, NoOfTerms)
 
         # finding average reaction
@@ -108,14 +108,14 @@ class SentimentAnalysis:
         print()
         print("Detailed Report: ")
         print(str(positive) + "% people thought it was positive")
-        print(str(wpositive) + "% people thought it was weakly positive")
-        print(str(spositive) + "% people thought it was strongly positive")
+        print(str(weak_positive) + "% people thought it was weakly positive")
+        print(str(strong_positive) + "% people thought it was strongly positive")
         print(str(negative) + "% people thought it was negative")
-        print(str(wnegative) + "% people thought it was weakly negative")
-        print(str(snegative) + "% people thought it was strongly negative")
+        print(str(weak_negative) + "% people thought it was weakly negative")
+        print(str(strong_negative) + "% people thought it was strongly negative")
         print(str(neutral) + "% people thought it was neutral")
 
-        self.plotPieChart(positive, wpositive, spositive, negative, wnegative, snegative, neutral, searchTerm, NoOfTerms)
+        self.plotPieChart(positive, weak_positive, strong_positive, negative, weak_negative, strong_negative, neutral, searchTerm, NoOfTerms)
 
 
     def cleanTweet(self, tweet):
@@ -127,10 +127,10 @@ class SentimentAnalysis:
         temp = 100 * float(part) / float(whole)
         return format(temp, '.2f')
 
-    def plotPieChart(self, positive, wpositive, spositive, negative, wnegative, snegative, neutral, searchTerm, noOfSearchTerms):
-        labels = ['Positive [' + str(positive) + '%]', 'Weakly Positive [' + str(wpositive) + '%]','Strongly Positive [' + str(spositive) + '%]', 'Neutral [' + str(neutral) + '%]',
-                  'Negative [' + str(negative) + '%]', 'Weakly Negative [' + str(wnegative) + '%]', 'Strongly Negative [' + str(snegative) + '%]']
-        sizes = [positive, wpositive, spositive, neutral, negative, wnegative, snegative]
+    def plotPieChart(self, positive, weak_positive, strong_positive, negative, weak_negative, strong_negative, neutral, searchTerm, noOfSearchTerms):
+        labels = ['Positive [' + str(positive) + '%]', 'Weakly Positive [' + str(weak_positive) + '%]','Strongly Positive [' + str(strong_positive) + '%]', 'Neutral [' + str(neutral) + '%]',
+                  'Negative [' + str(negative) + '%]', 'Weakly Negative [' + str(weak_negative) + '%]', 'Strongly Negative [' + str(strong_negative) + '%]']
+        sizes = [positive, weak_positive, strong_positive, neutral, negative, weak_negative, strong_negative]
         colors = ['yellowgreen','lightgreen','darkgreen', 'gold', 'red','lightsalmon','darkred']
         patches, texts = plt.pie(sizes, colors=colors, startangle=90)
         plt.legend(patches, labels, loc="best")
